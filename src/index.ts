@@ -116,9 +116,34 @@ for(const userInfo of lines){
 function range(min:number,max:number):number[]{
     const result = []
     for(let i = min; i < max; i++){
-        result.push(i)
+        result.push(i);
     }
     return result;
 }
 
+function sayHello(n:number):void {
+    for(let i = n; i < n; i++){
+        console.log("hello");
+    }
+}
 
+//関数式
+type Human = {
+    weight:number;
+    height:number;
+};
+
+const calcBMI = function(human:Human):number  {
+    const BMI:number = human.weight / human.height ** 2
+    return BMI
+};
+const calcBMI_b = function({weight,height}:Human):number  {
+    const BMI:number = weight / height ** 2
+    return BMI
+};
+
+const calcBMI_allow = ({weight,height}:Human):number => {
+    const BMI:number = weight / height ** 2
+    return BMI
+};
+const calcBMI_short = ({weight,height}:Human):number =>  weight / height ** 2;
