@@ -147,3 +147,60 @@ const calcBMI_allow = ({weight,height}:Human):number => {
     return BMI
 };
 const calcBMI_short = ({weight,height}:Human):number =>  weight / height ** 2;
+
+function nandemoArray<T>(element:T,length:number):T[]{
+    const result:T[] = []
+    for(let i = 0;i < length;i++){
+        result.push(element)
+    }
+    return result
+}
+
+const nandemoArray_f = function<T>(element:T,length:number):T[]{
+    const result:T[] = []
+    for(let i = 0;i < length;i++){
+        result.push(element)
+    }
+    return result
+}
+
+const nandemoArray_a = <T>(element:T,length:number):T[] => {
+    const result:T[] = []
+    for(let i = 0;i < length;i++){
+        result.push(element)
+    }
+    return result
+}
+
+const nandemoArray_o = {
+    nandemoArray<T>(element:T,num:number):T[]{
+        const result:T[] = []
+        for(let i = 0;i < length;i++){
+            result.push(element)
+        }
+        return result
+    }
+}
+
+const pair = <Left,Right>(left:Left,right:Right):[Left,Right] => {
+    return [left,right]
+}
+const p = pair<string,number>("manabe",30)
+
+const nandemoArray_ex = <T extends {name:string}>(element:T,length:number):T[] => {
+    const result:T[] = []
+    for(let i = 0;i < length;i++){
+        result.push(element)
+    }
+    return result
+}
+
+type Pet = {
+    name:string;
+    age:number;
+};
+
+console.log(nandemoArray_ex<Pet>({
+    name:"udon",
+    age:4
+},3))
