@@ -212,6 +212,7 @@ class user_constract_obj1{
     constructor(public name:string,private age:number){}
 }
 
+//継承
 class standardUser{
     name:string;
     age:number;
@@ -220,10 +221,48 @@ class standardUser{
         this.name = name;
         this.age = age;
     }
+
+    public isAdult():boolean {
+        return this.age >= 20;
+    }
 }
+//extendsで子クラスにする
 class premiumUser extends standardUser{
-    rank:string = "gold"
+    // //子クラス特有のプロパティ
+    // rank:string = "gold";
+
+    //子クラスでコンストラクタ使う場合
+    rank:string;
+    //子クラスでコンストラクタを使う場合はsuperが必要
+    //まず親のコンストラクタを動かす、という宣言を明示的に行う
+    //子クラスにコンストラクタが必要ない場合、勝手に親クラスのコンストラクタが使用される
+    constructor(name:string,age:number,rank:string){
+        super(name,age);
+        this.rank = rank
+
+    }
+
+    //親クラスのプロパティやメソッドを上書き（オーバーライド）できる
+    //ただし関数型が一致するときのみ
+    public override isAdult(): boolean {
+        return true;
+    }
+
 }
-const Sousuke = new premiumUser("sousuke",31)
+//継承した子クラス作成
+//const Sousuke = new premiumUser("sousuke",31)
+const Sousuke = new premiumUser("sousuke",31,"gold")
+
+//standerdUser（親クラス）のプロパティにアクセスできる
 console.log(Sousuke.age)
 console.log(Sousuke.rank)
+//もちろん継承された子クラスは親クラスの部分型になる
+//例えばstandardUser型の引数に
+//premiumUser型のオブジェクトを引数に取ることができる
+const helloUser = (u:standardUser):string => {
+    return `こんにちは。${u.name}さん`
+}
+const greedName = helloUser(Sousuke)
+
+
+
