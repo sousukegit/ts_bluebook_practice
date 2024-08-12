@@ -212,4 +212,18 @@ class user_constract_obj1{
     constructor(public name:string,private age:number){}
 }
 
+class standardUser{
+    name:string;
+    age:number;
 
+    constructor(name:string,age:number){
+        this.name = name;
+        this.age = age;
+    }
+}
+class premiumUser extends standardUser{
+    rank:string = "gold"
+}
+const Sousuke = new premiumUser("sousuke",31)
+console.log(Sousuke.age)
+console.log(Sousuke.rank)
