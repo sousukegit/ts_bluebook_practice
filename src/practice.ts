@@ -78,5 +78,41 @@ for(const i of sequence(1,100)){
     console.log(message)
 }
 
+//map関数作ろう
+function map(num:number[],callback:(x:number)=>number):number[]{
+    const array:number[] = [];
+
+    // Forofで書けるので修正
+    // for(let i = 0; i < num.length; i++){
+    //     const changenum = callback(array[i]);
+    //     num[i] = changenum;
+    // }
+
+    for(const i of num){
+        array.push(callback(num[i]));
+    }
+    return array;
+}
+const data_num_a = [1, 1, 2, 3, 5, 8, 13];
+
+const result = map(data_num_a, (x) => x * 10);
+// [10, 10, 20, 30, 50, 80, 130] と表示される
+console.log(result);
+
+//ジェネリクス使ったmap関数作ろう
+const j_map = <T,U>(array:T[],callback:(x:T)=>U):U[] => {
+    const return_array:U[] = [];
+
+    for(const i of array){
+        return_array.push(callback(i))
+    }
+
+    return return_array;
+}
+
+const data_tako = [1, -3, -2, 8, 0, -1];
+const result_tako: boolean[] = j_map(data_tako, (x) => x >= 0);
+
+
 
 
