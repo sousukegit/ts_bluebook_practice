@@ -113,6 +113,30 @@ const j_map = <T,U>(array:T[],callback:(x:T)=>U):U[] => {
 const data_tako = [1, -3, -2, 8, 0, -1];
 const result_tako: boolean[] = j_map(data_tako, (x) => x >= 0);
 
+class User_practice{
+    //ここはコンストラクタ以外で使用しないので読み取り専用に
+    readonly name:string;
+    readonly age:number;
 
+    constructor(name:string,age:number){
+        if(name === ""){
+            throw new Error("名前がないよ")
+        }
 
+        this.name = name;
+        this.age = age;
+    }
+
+    getMessage(message:string):string{
+        return `${this.name}+(${this.age}「${message}」)`;
+    }
+}
+
+const createUser = (name:string,age:number):(message:string)=>void =>{
+    const getMessage = (message:string):void => {
+       console.log(`${name}+(${age}「${message}」)`);
+    }
+    
+    return getMessage
+}
 
