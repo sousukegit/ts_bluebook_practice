@@ -59,3 +59,15 @@ const checkFuncAdultUser = (loginuser:loginUser|null):void =>{
     }
 }
 
+//リテラル型
+//その値しか代入ができない型
+//"foo"という型の意味は「"foo"という文字列のみが代入できる型」
+type FooString = "foo";
+const foostring:FooString = "foo"; // このようにしか使用できない
+const foostring_a = "foo"; //これもリテラル型（"foo"型）
+
+//おもにリテラル型のユニオン型で使用されることがTSで多い
+//いくつかの特定の値のみを受け付けたいという場合にユニオン型とリテラル型の組み合わせが非常に適している
+const plusOrMinus = (hugou:"plus"|"minus") : number => {
+    return hugou === "plus" ? 1 :-1;
+}
