@@ -44,9 +44,18 @@ const useMaybyAnimal = (animal:Animal|undefined):void => {
 }
 //関数呼び出しの場合にも使用する
 //関数自体が存在すれば実行（関数呼び出しオプショナル）
+//関数が与えられているときのみ呼び出したい
+//用途：ボタンなどのUIコンポーネントに仕込む関数など
 type GetTimeFunc = () => Date;
 const useTime = (getTimeFunc:GetTimeFunc|undefined):void =>{
     //引数として関数が存在したら実行する
     const timeOrUndefined = getTimeFunc?.();
 }
 //オブジェクトが存在すれば実行（メソッド呼び出しオプショナル）
+type loginUser = {isAdult():boolean}
+const checkFuncAdultUser = (loginuser:loginUser|null):void =>{
+    if(loginuser?.isAdult()){
+        console.log("オトナのコンテンツ見せて上げる")
+    }
+}
+
