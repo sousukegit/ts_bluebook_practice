@@ -71,3 +71,30 @@ const foostring_a = "foo"; //これもリテラル型（"foo"型）
 const plusOrMinus = (hugou:"plus"|"minus") : number => {
     return hugou === "plus" ? 1 :-1;
 }
+
+//型アサーション
+function getFirstFiveLetters(strOrNum: string | number) {
+    const str = strOrNum as string;
+    return str.slice(0, 5);
+  }
+  
+  // "uhyoh" と表示される
+  console.log(getFirstFiveLetters("uhyohyohyo"));
+  
+  // ランタイムエラーが発生！
+  console.log(getFirstFiveLetters(123));
+
+//any型
+const doWhatever = (obj:any) => {
+    //好きなプロパティにアクセス
+    console.log(obj.user.name);
+    //関数もOK
+    obj();
+    //計算もOK
+    const result = obj * 3;
+    //文字型もOK
+    const moji:string = obj;
+
+}
+//コンパイルエラーがでないが必ずランタイムエラー
+doWhatever("a")
