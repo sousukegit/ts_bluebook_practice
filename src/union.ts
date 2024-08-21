@@ -98,3 +98,18 @@ const doWhatever = (obj:any) => {
 }
 //コンパイルエラーがでないが必ずランタイムエラー
 doWhatever("a")
+
+//ユーザー定義型ガード（型述語）
+
+//sometingの型を絞り込む機能
+//isStringOrNumberの戻り値は真偽値だけど、戻り値がtrueだった場合
+//somethingにstring|number型が付与される
+const isStringOrNumber = (value:unknown):value is string|number => {
+    return typeof value === "string" || typeof value === "number";
+}
+const something:unknown = 232;
+
+if(isStringOrNumber(something)){
+    //ここでsomething_numはstring|number型
+    console.log(something.toString());
+}
