@@ -141,3 +141,30 @@ const createUser = (name:string,age:number):(message:string)=>void =>{
 }
 
 
+type Option<T> = {
+    tag:"man";
+    age:T
+}|{
+    tag:"none";
+}
+
+const getAge= (obj:Option<number>):void => {
+    if(obj.tag === "man"){
+        console.log(obj.age);
+    }
+}
+
+const examMan:Option<number> = {
+    tag:"man",
+    age:2
+}
+getAge(examMan);
+
+// const isMan = (value:unknown):value is "man" => {
+//     return value
+// }
+
+
+const isMan = <T>(obj:Option<T>):obj is {tag:"man"; age:T} => {
+    return obj.tag === "man";
+}
