@@ -181,12 +181,15 @@ getAge(examMan);
 // }
 
 //戻りにはどちらの型が変えるかわからないのでUをつかう
-const mapOption = <T,U>(obj:Option<T>,callback:(value:T) => U):Option<U> => {
-    if(obj.tag === "man"){
-        return { tag:"man", age:callback(obj.age)}
+const mapOption = <T,U>(opt:Option<T>,callback:(value:T)=>U)=>{
+    if(opt.tag === "man"){
+        return {tag:"man", age:callback(opt.age)}
     }
     else{
         return {tag:"none"}
     }
 }
 
+
+
+export {mapOption}
