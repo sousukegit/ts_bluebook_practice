@@ -148,8 +148,18 @@ type Option<T> = {
     tag:"none";
 }
 
+const isMan = <T>(obj:Option<T>):obj is {tag:"man"; age:T} => {
+    return obj.tag === "man";
+}
+
 const getAge= (obj:Option<number>):void => {
     if(obj.tag === "man"){
+        console.log(obj.age);
+    }
+}
+
+const getAge2= (obj:Option<number>):void => {
+    if(isMan(obj)){
         console.log(obj.age);
     }
 }
@@ -164,7 +174,19 @@ getAge(examMan);
 //     return value
 // }
 
+// const mapOption = <T>(obj:Option<T>,func:(num:number) => number):Option<T> => {
+//     if(obj.tag === "man"){
+//         return 
+//     }
+// }
 
-const isMan = <T>(obj:Option<T>):obj is {tag:"man"; age:T} => {
-    return obj.tag === "man";
+//戻りにはどちらの型が変えるかわからないのでUをつかう
+const mapOption = <T,U>(obj:Option<T>,callback:(value:T) => U):Option<U> => {
+    if(obj.tag === "man"){
+        return { tag:"man", age:callback(obj.age)}
+    }
+    else{
+        return {tag:"none"}
+    }
 }
+
