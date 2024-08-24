@@ -1,6 +1,15 @@
 import * as fs from "fs";
+import * as path from "path";
+import * as url from "url";
 
-const fileText:string = fs.readFileSync("practice.txt",{encoding:"utf-8"})
+//現在のファイルのパスを取得
+const nowPath = url.fileURLToPath(import.meta.url);
+//ディレクトリのみに加工する
+const nowDir = path.dirname(nowPath);
+//指定パスの絶対パスを作成
+const currentPath = path.join(nowDir,"../practice.txt")
+
+const fileText:string = fs.readFileSync(currentPath,{encoding:"utf-8"})
 
 let startIndex = 0;
 let count = 0;
