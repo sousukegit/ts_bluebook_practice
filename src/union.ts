@@ -8,9 +8,9 @@ type Man = {
 type unionUser = Animal | Man
 
 //コンパイルエラー
-const getName = (user:unionUser):string => {
-    return user.name;
-}
+// const getName = (user:unionUser):string => {
+//     return user.name;
+// }
 //インターセクション型
 type Human_inter = Animal & {age:number}
 
