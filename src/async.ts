@@ -100,3 +100,7 @@ p.then((results) => {
   console.log("baz.txt:", results[2]);
 });
 
+//promiseチェーン
+//then自体には新たなpromiseオブジェクトが帰ってくる
+//
+//最後のエラー処理のcatchの処理を必ず行う
