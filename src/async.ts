@@ -125,6 +125,21 @@ const main = async() => {
     await writeFile("practice.txt",naiyo+naiyo);
 
     //await writeFileが失敗したときの処理はtry-catheで記述できる
+    const main = async() => {
+        //インポート事態に非同期処理が必要なモノはimport()で記述できる
+        const {readFile,writeFile} = await import("fs/promises");
+        const naiyo = await readFile("practice.txt","utf-8");
+        await writeFile("practice.txt",naiyo+naiyo);
+        //await writeFileが失敗したときの処理はtry-catheで記述できる
+        try {
+            console.log("書き込み終了");
+        } catch (error) {
+            console.log(error);
+        }
+    
+    }
+    
+    main().then((data)=>{console.log("mainが完了した")})
     console.log("書き込み終了");
 }
 
