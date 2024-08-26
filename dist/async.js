@@ -36,7 +36,8 @@ p.then((data) => { console.log(data); }, (error) => { console.log("失敗", erro
 //引数は(resolve)=>{...}というexecuterと呼ばれる関数
 //executer関数はコンストラクタ時に即時に実行される
 //resolveはnew Promiseで内部的に用意される関数
-//中の非同期処理が終わったらresolveを実行してということで送られてくる
+//関数を使用する際のコールバック関数に当たる部分と思うとわかりやすい
+//executer関数内の非同期処理が終わったらresolveを実行してということで送られてくる
 //この例でいうとsetTimeoutという非同期処理が終わったらresleveを実行
 //多くの場合、new PromiseによるPromiseの作成は、コールバック関数ベースの非同期処理をPromiseに変換するために行われます。
 //このexecuter関数は3秒後にresolveが実行されるような関数
@@ -48,4 +49,60 @@ p.then((data) => { console.log(data); }, (error) => { console.log("失敗", erro
 const createP = new Promise((resolve) => {
     setTimeout(() => { resolve(100); }, 3000);
 });
+//thenにセットした引数dataは必ず100になる
 createP.then((data) => { console.log("createP:" + data); });
+//タイマーをPromiseでつくる
+//thenでセットされたコールバック関数はresolveに当たる
+//rejectは失敗したときの関数
+const sleep = (duration) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(resolve, duration);
+    });
+};
+sleep(3000).then(() => console.log("3秒"));
+//promiseの静的メソッド
+//promiseに直接アクセスする方法
+//即座に非同期処理が実行される
+const goodResult = Promise.resolve(100);
+goodResult.then((data) => console.log("goodResult" + data));
+//意味は下記と同じ
+const goodResult_2 = new Promise((resolve) => { resolve(100); });
+//即座位に失敗する
+const badResult = Promise.reject(100);
+badResult.catch((error) => { console.log(error); });
+//複数の非同期処理を配列にまとめる
+//例　複数ファイルの読み込み
+//どれかが失敗したら、
+const pFoo = fs_p.readFile("foo.txt", "utf8");
+const pBar = fs_p.readFile("bar.txt", "utf8");
+const pBaz = fs_p.readFile("baz.txt", "utf8");
+const p_all = Promise.all([pFoo, pBar, pBaz]);
+p_all.then((results) => {
+    console.log("foo.txt:", results[0]);
+    console.log("bar.txt:", results[1]);
+    console.log("baz.txt:", results[2]);
+}, (error) => { console.log(error); });
+// promiseチェーン
+// then自体には新たなpromiseオブジェクトが帰ってくる
+goodResult.then((data) => console.log("goodResult" + data)).then().catch;
+//最後のエラー処理のcatchの処理を必ず行う
+//async/await
+//async functionで必ず戻り値がpromiseが帰ってくる
+//new Promise の returnではなく、promiseに結果が内包されたオブジェクトが帰ってくる
+async function get3() {
+    console.log("２：get3が呼び出されました");
+    await sleep(1000);
+    return 3;
+}
+console.log("１：get3を呼び出しましす");
+const p_get3 = get3();
+p_get3.then((result) => { console.log(`４：結果は${result}`); });
+console.log("３：get3を呼び出しました");
+const main = async () => {
+    //インポート事態に非同期処理が必要なモノはimport()で記述できる
+    const { readFile, writeFile } = await import("fs/promises");
+    const naiyo = await readFile("practice.txt", "utf-8");
+    await writeFile("practice.txt", naiyo + naiyo);
+    console.log("書き込み終了");
+};
+main().then((data) => { console.log("mainが完了した"); });

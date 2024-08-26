@@ -87,20 +87,45 @@ badResult.catch((error) => {console.log(error)});
 
 //複数の非同期処理を配列にまとめる
 //例　複数ファイルの読み込み
-//どれかが失敗したら、
+//どれか１つが失敗したら、reject（エラー時に実行するコールバック関数）が実行される
 const pFoo = fs_p.readFile("foo.txt", "utf8");
 const pBar = fs_p.readFile("bar.txt", "utf8");
 const pBaz = fs_p.readFile("baz.txt", "utf8");
 
 const p_all = Promise.all([pFoo, pBar, pBaz]);
 
-p.then((results) => {
+p_all.then((results) => {
   console.log("foo.txt:", results[0]);
   console.log("bar.txt:", results[1]);
   console.log("baz.txt:", results[2]);
-});
+},(error)=>{console.log(error)});
 
-//promiseチェーン
-//then自体には新たなpromiseオブジェクトが帰ってくる
-//
+// promiseチェーン
+// then自体には新たなpromiseオブジェクトが帰ってくる
+goodResult.then((data)=>console.log("goodResult"+ data)).then().catch
 //最後のエラー処理のcatchの処理を必ず行う
+
+//async/await
+//async functionで必ず戻り値がpromiseが帰ってくる
+//new Promise の returnではなく、promiseに結果が内包されたオブジェクトが帰ってくる
+async function get3():Promise<number>{
+    console.log("２：get3が呼び出されました")
+    await sleep(1000)
+    return 3
+}
+console.log("１：get3を呼び出しましす")
+const p_get3:Promise<number> = get3();
+p_get3.then((result)=>{console.log(`４：結果は${result}`)})
+console.log("３：get3を呼び出しました")
+
+const main = async() => {
+    //インポート事態に非同期処理が必要なモノはimport()で記述できる
+    const {readFile,writeFile} = await import("fs/promises");
+    const naiyo = await readFile("practice.txt","utf-8");
+    await writeFile("practice.txt",naiyo+naiyo);
+
+    //await writeFileが失敗したときの処理はtry-catheで記述できる
+    console.log("書き込み終了");
+}
+
+main().then((data)=>{console.log("mainが完了した")})
