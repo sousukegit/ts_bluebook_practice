@@ -9,14 +9,19 @@ const nowDir = path.dirname(nowPath);
 //指定パスの絶対パスを作成
 const currentPath = path.join(nowDir,"../practice.txt")
 
+const sleep = (num:number) =>{
+    return new Promise((resolve)=>{
+        setTimeout(resolve, num);
+    })
+}
+
 
 const fileRead = async()=>{
-    
     try {
         //タイマースタート
-        const data =  readFile(currentPath,"utf-8")
-        //一秒awaitする
+        const data =  await readFile(currentPath,"utf-8")
         //処理が終わってなかったらthorowエラー
+        console.log("ファイルを読み込みました")
         return data;
     } catch (error) {
         console.log(error);
@@ -26,7 +31,10 @@ const fileRead = async()=>{
 
 let startIndex = 0;
 let count = 0;
-
+sleep(1).then(()=>{
+    console.log("processを修了します")
+    process.exit();
+})
 const fileText = await fileRead();
 
 while(true){

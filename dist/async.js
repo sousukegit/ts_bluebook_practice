@@ -72,7 +72,7 @@ const badResult = Promise.reject(100);
 badResult.catch((error) => { console.log(error); });
 //複数の非同期処理を配列にまとめる
 //例　複数ファイルの読み込み
-//どれかが失敗したら、
+//どれか１つが失敗したら、reject（エラー時に実行するコールバック関数）が実行される
 const pFoo = fs_p.readFile("foo.txt", "utf8");
 const pBar = fs_p.readFile("bar.txt", "utf8");
 const pBaz = fs_p.readFile("baz.txt", "utf8");
@@ -103,6 +103,21 @@ const main = async () => {
     const { readFile, writeFile } = await import("fs/promises");
     const naiyo = await readFile("practice.txt", "utf-8");
     await writeFile("practice.txt", naiyo + naiyo);
+    //await writeFileが失敗したときの処理はtry-catheで記述できる
+    const main = async () => {
+        //インポート事態に非同期処理が必要なモノはimport()で記述できる
+        const { readFile, writeFile } = await import("fs/promises");
+        const naiyo = await readFile("practice.txt", "utf-8");
+        await writeFile("practice.txt", naiyo + naiyo);
+        //await writeFileが失敗したときの処理はtry-catheで記述できる
+        try {
+            console.log("書き込み終了");
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+    main().then((data) => { console.log("mainが完了した"); });
     console.log("書き込み終了");
 };
 main().then((data) => { console.log("mainが完了した"); });
