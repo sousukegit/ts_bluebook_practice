@@ -47,3 +47,5 @@ while(true){
     }
 }
 console.log(count)
+
+//ブルーベリー本読了！！

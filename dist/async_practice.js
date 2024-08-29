@@ -29,7 +29,7 @@ let startIndex = 0;
 let count = 0;
 sleep(1).then(() => {
     console.log("processを修了します");
-    process.exit;
+    process.exit();
 });
 const fileText = await fileRead();
 while (true) {
